@@ -1,0 +1,20 @@
+--- dlls/ntdll/time.c.orig	2011-07-16 02:32:43.000000000 +0200
++++ dlls/ntdll/time.c	2011-07-16 02:33:03.000000000 +0200
+@@ -896,11 +896,12 @@
+  */
+ ULONG WINAPI NtGetTickCount(void)
+ {
+-    struct timeval current_time;
+-
+-    gettimeofday(&current_time, NULL);
+-    return (current_time.tv_sec - server_start_time.sec) * 1000 +
+-           (current_time.tv_usec - server_start_time.usec) / 1000;
++    //struct timeval current_time;
++    //
++    //gettimeofday(&current_time, NULL);
++    //return (current_time.tv_sec - server_start_time.sec) * 1000 +
++           //(current_time.tv_usec - server_start_time.usec) / 1000;
++    return 1337;
+ }
+ 
+ 

@@ -1,0 +1,1 @@
+You must apply getTickCount.diff to wine - it ensures that the random seed is set the same every time

@@ -1,0 +1,34 @@
+Simple instructions for setting up a relaying SMTP server in windows
+====================================================================
+
+Download hMailServer from www.hmailserver.com. These instructions are based on
+version 5.3.
+
+Install it, accepting all defaults.
+
+Enter a password when it asks, then have it start the 'administrator' when it
+offers to.
+
+In the administrator, hit 'connect'.
+
+On the left, select Advanced->IP Ranges, then double-click on 'internet'.
+
+Under "Allow deliveries", deselect everything.
+
+Now select 'My computer' under Advanced->IP Ranges, ensure that "Allow
+deliveries from: external to external" is ticked, but "require SMTP
+authentication: external to external" is *not* ticked.
+
+If you're lucky, your ISP is not blocking outgoing connections to SMTP
+servers, and you should now be done. But probably you're not lucky, and you'll
+have to set the server to forward mail via your ISP's server.
+
+To do this, go to Settings->Protocols->SMTP->Delivery of e-mail, and put the
+details of your ISP's SMTP server there. This is most likely something like
+"smtp.yourisp.com", port 25, and maybe some authentication details.
+
+Hopefully, all will now work.
+
+Please test that you are not now running an open relay - see
+http://www.abuse.net/relay.html
+

@@ -1,0 +1,126 @@
+How to use this server:
+
+* Starting a new game:
+Send a mail to mbays@paunix.org with subject line:
+
+LSN New [opponentAddress] [type] [FP] [maxturns] [map] [mode]
+
+type, FP, maxturns, map and mode are all optional - defaults are Friendly, 20,
+30, Pool and wipeout respectively.
+
+opponentAddress is also optional - if you leave it blank, it's interpreted as
+accepting/creating an "open challenge". If there's a challenge open which
+doesn't conflict with your parameters, you'll accept it; else, you'll create a
+new challenge.
+
+Examples:
+LSN New
+    - just get a game
+LSN New evil@xyz.zy
+    - start a game against evil@xyz.zy on a random map
+LSN New evil@xyz.zy L 30 40 forest hq
+    - start a ladder hq game on Forest with 30 fp limit and 40 turn limit
+LSN New trains
+    - play on Trains against whoever next sends 'LSN New' or 'LSN New trains'
+
+To get a list of maps you can use, send a mail with subject line "LSN maps",
+or see http://www.countzero.pwp.blueyonder.co.uk/lsn/maphq.htm.
+Map names are not case sensitive. If you don't specify a map, or if you
+specify "Pool", a random balanced map from the map pool will be chosen; if you
+specify "Random", a possibly unbalanced random map will be used.
+
+* Playing turns:
+You will get .lsn files mailed to you. You should open these with your
+LSNClient.exe and play the turn, and send your orders back to this server.
+
+There are two ways to do this.
+
+The first is simply to mail your orders to the server. At the end of your
+turn, hit 'save file'. LSN will save a file which you should manually send to
+the server by sending a mail with subject line "LSN Game" to mbays@paunix.org,
+with the orders file created by LSN attached (note you should send the orders
+file, not the gamestate file). You will find the file somewhere like:
+    Games/00001337/Orders/orders1_G00001337_T17.lsn
+
+The second option is to set things up such that the LSN client will send the
+mails for you. NOTE: it has been reported that this hacking of LSNClient.exe
+might make windows refuse to run the exe. If you try this, please tell me how
+it goes! If you want to try, here's how:
+(i) Ensure that Configs/UserData.cfg has SMTPServer set to an
+    *unauthenticated* SMTP server you have access to. If you're lucky, your
+    ISP will provide such a server - but you may well find that you have
+    access only to SMTP servers which require authentication. In this case,
+    your best bet is probably to set SMTPServer to 'localhost', and set up an
+    SMTP server on your own machine to relay mails via an authenticated
+    server. For some simple instructions on how to do this on a Windows
+    machine, see http://mbays.freeshell.org/lsnd/SMTPHelp
+    or mail mbays@paunix.org with subject 'LSN SMTP Help'.
+(ii) Make a backup of LSNClient.exe
+(iii) load LSNClient.exe in your favourite hex editor, go to position 2175AC,
+    and change '<lsnorders@codo-linux1.bytemark.co.uk>' to '<mbays@paunix.org>'.
+    Ensure that the bytes between the '>' and 'Could not send mail' are all
+    00.
+    If you have access to a unix shell, you could use the following command to
+    do this rather than using a hex editor:
+    sed "s/<lsnorders@codo-linux1.bytemark.co.uk>/<\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00>mbays@paunix.org/g" < LSNClient.exe > LSNClient.hacked.exe
+(iv) always use this hacked version of LSNClient.exe when loading games from
+    this server. At the end of your turn, hit 'send'.
+
+* Ladder and Rating:
+There are three types of game: Ladder, Friendly, and Very Friendly
+(abbreviated to L, F, VF). In Ladder games, you play for ladder points. In
+Ladder games and Friendlies, you play for ELO. In VFs, you just play.
+
+You can check the current ladder with the 'ladder' command. You'll be added to
+it if you play a ladder game.
+
+ELO isn't implemented yet!
+
+For the purposes of the ladder and ratings, you are your email address.
+Specifically, the email address you send your first turn from is the one which
+counts.
+
+* Other commands:
+You can get a list of open challenges with "LSN challenges", and can cancel
+the challenges you've made with "LSN unchallenge".
+
+"LSN games" will give info on the games you have in progress. You are
+identified by your email address. If you lost a turn file, you can get the
+server to resend the last turn's results with "LSN resend [game number]"
+(or "LSN resend [game number] [turn]" if you want an old results file).
+
+
+Warnings and disclaimers:
+This server is running on my home computer, which is neither beefy nor
+permanently on. Processing will sometimes take a few minutes, sometimes a few
+hours, and occasionally a few days. Please be patient.
+
+This server is intended only as a stop-gap solution. Hopefully, Codogames will
+either start a proper server going again, or give the community the means to
+do so.
+
+If Codogames at any point ask me to stop running this server, I will do so.
+
+One last warning: the password set in your LSN client is sent out with your
+orders files, so if I wanted to (which I don't) I could read them. So if your
+password is at all sensitive, I suggest you blank it out before using this
+server.
+
+Full technical information about this server, including all code, is available
+at http://mbays.freeshell.org/lsnd/.
+
+
+Summary of commands:
+LSN new [opponentAddress] [type] [FP] [maxturns] [map] [mode]
+LSN game [[with turnfile attached]]
+LSN games
+LSN ladder
+LSN resend [game number] [turn]
+LSN challenges
+LSN unchallenge
+LSN cancel [game number]
+LSN help
+
+
+That's it. Happy gaming!
+

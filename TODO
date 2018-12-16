@@ -1,0 +1,10 @@
+Optimising reconstruction process
+    Might be able to overwrite turn 1 or 2 with later turnfiles, if also edit
+    the turn in the orders files?
+
+    Also, it looks like preserving more files will make the wine hack
+    redundant.
+
+Mods
+    Can we just edit the data in the turn 0/1 files, and not require the
+    players to edit their config files?

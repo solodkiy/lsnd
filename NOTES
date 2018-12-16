@@ -1,0 +1,36 @@
+Rough sketch of the setup:
+
+Two components:
+    (I) lsnd.py:
+	Python script.
+
+	Runs as a new user; all relevant mail is forwarded to this user.
+
+	Works through its mailqueue.
+
+	On getting a new game request: start a new game with the hotseat
+	automaton, send out results files to the players.
+
+	On getting a turnfile: put it in appropriate Orders/ dir. If it
+	completes a set, start up a new instance of the hotseat automaton if
+	necessary, wait for the results files, and mail them out.
+
+	Keep only N hotseat automatons alive at a time, killing judiciously
+	chosen ones to make room.
+
+    (II) lsnautomaton.sh:
+	Bash script. Given a game number, it
+	    Hacks a copy of LSNClient.exe to use the game number for hotseat
+	    play, and runs it in a new Xvfb;
+
+	    Starts a hotseat game with parameters prescribed by a file in the
+	    game dir;
+
+	    Iteratively: waits for orders files to appear, chmods them -w, and
+	    executes the current turn with null orders (note this is slightly
+	    tricky to automate for deployment turns!).
+
+	    While waiting for an orders file, it keeps the LSN process
+	    suspended.
+
+	    Recognises end-of-game, and handles it appropriately.
